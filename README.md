@@ -1,1 +1,1 @@
-# slouchinator.github.io
+# slouchinator
