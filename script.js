@@ -1,23 +1,23 @@
 const userData = {
     userA: {
-        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userB: {
-        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userC: {
-        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userD: {
-        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     }
 };
 
@@ -79,7 +79,7 @@ function hideUserStats() {
 function updateChart() {
     const timeframe = document.getElementById('timeframe').value;
     const data = userData[currentUser][timeframe];
-    const labels = data.map((_, index) => `Day ${index + 1}`);
+    const labels = data.map(day => day.date.toISOString().split('T')[0]);
 
     if (currentChart) {
         currentChart.destroy();
