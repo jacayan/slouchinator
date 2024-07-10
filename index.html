@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posture Leaderboard</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Posture Leaderboard</h1>
@@ -20,34 +21,33 @@
             </tr>
         </thead>
         <tbody id="leaderboard">
-            <!-- Sample Data -->
-            <tr>
+            <tr data-user="userA">
                 <td>1</td>
-                <td>User A</td>
+                <td><a href="#" onclick="showUserStats('userA')">User A</a></td>
                 <td>50</td>
                 <td>150</td>
                 <td>200</td>
                 <td>3.0</td>
             </tr>
-            <tr>
+            <tr data-user="userB">
                 <td>2</td>
-                <td>User B</td>
+                <td><a href="#" onclick="showUserStats('userB')">User B</a></td>
                 <td>80</td>
                 <td>160</td>
                 <td>240</td>
                 <td>2.0</td>
             </tr>
-            <tr>
+            <tr data-user="userC">
                 <td>3</td>
-                <td>User C</td>
+                <td><a href="#" onclick="showUserStats('userC')">User C</a></td>
                 <td>30</td>
                 <td>60</td>
                 <td>90</td>
                 <td>2.0</td>
             </tr>
-            <tr>
+            <tr data-user="userD">
                 <td>4</td>
-                <td>User D</td>
+                <td><a href="#" onclick="showUserStats('userD')">User D</a></td>
                 <td>70</td>
                 <td>70</td>
                 <td>140</td>
@@ -55,5 +55,18 @@
             </tr>
         </tbody>
     </table>
+
+    <div id="user-stats" style="display:none;">
+        <h2 id="user-name"></h2>
+        <canvas id="userChart"></canvas>
+        <select id="timeframe" onchange="updateChart()">
+            <option value="week">Past Week</option>
+            <option value="month">Past Month</option>
+            <option value="year">Past Year</option>
+        </select>
+        <button onclick="hideUserStats()">Back to Leaderboard</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@ body {
     padding: 20px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
     color: #343a40;
 }
@@ -31,4 +31,17 @@ th {
 
 tbody tr:nth-child(odd) {
     background-color: #f2f2f2;
+}
+
+#user-stats {
+    text-align: center;
+}
+
+#userChart {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#timeframe {
+    margin: 20px;
 }
