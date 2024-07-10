@@ -1,28 +1,67 @@
 const userData = {
     userA: {
-        week: [3.0, 2.9, 3.2, 3.1, 2.8, 3.0, 3.1],
-        month: [2.8, 3.0, 3.2, 2.9, 3.1, 2.8, 3.0, 3.2, 2.9, 3.1, 3.0, 2.8, 3.1, 2.9, 3.2, 3.0, 2.8, 3.1, 2.9, 3.2, 3.0, 2.8, 3.1, 2.9, 3.2, 3.0, 2.8, 3.1, 2.9, 3.2],
-        year: [2.9, 3.0, 3.1, 2.8, 3.0, 3.1, 2.9, 3.0, 3.2, 2.9, 3.1, 2.8]
+        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userB: {
-        week: [2.0, 2.1, 2.2, 2.0, 1.9, 2.0, 2.1],
-        month: [2.1, 2.0, 2.2, 2.1, 2.0, 2.2, 2.1, 2.0, 2.2, 2.0, 1.9, 2.0, 2.1, 2.0, 2.2, 2.1, 2.0, 2.2, 2.1, 2.0, 2.2, 2.0, 1.9, 2.0, 2.1, 2.0, 2.2, 2.1, 2.0, 2.2],
-        year: [2.0, 2.1, 2.2, 2.0, 1.9, 2.0, 2.1, 2.0, 2.2, 2.1, 2.0, 2.2]
+        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userC: {
-        week: [1.5, 1.6, 1.4, 1.5, 1.7, 1.5, 1.6],
-        month: [1.4, 1.5, 1.6, 1.5, 1.4, 1.5, 1.7, 1.5, 1.6, 1.5, 1.4, 1.5, 1.6, 1.5, 1.4, 1.5, 1.7, 1.5, 1.6, 1.5, 1.4, 1.5, 1.6, 1.5, 1.4, 1.5, 1.7, 1.5, 1.6, 1.5],
-        year: [1.6, 1.5, 1.4, 1.5, 1.7, 1.5, 1.6, 1.5, 1.4, 1.5, 1.6, 1.5]
+        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     },
     userD: {
-        week: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        month: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        year: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        month: Array(30).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        week: Array(7).fill().map(() => ({ slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
+        year: Array(12).fill().map(() => ({ slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
     }
 };
 
 let currentUser = 'userA';
 let currentChart;
+
+document.addEventListener("DOMContentLoaded", function() {
+    populateLeaderboard();
+});
+
+function calculateMonthlyStats(user) {
+    const data = userData[user].month;
+    const totalSlouching = data.reduce((acc, day) => acc + day.slouching, 0);
+    const totalCorrect = data.reduce((acc, day) => acc + day.correct, 0);
+    const totalTime = totalSlouching + totalCorrect;
+    const ratio = (totalCorrect / totalSlouching).toFixed(2);
+    return { totalSlouching, totalCorrect, totalTime, ratio };
+}
+
+function populateLeaderboard() {
+    const leaderboard = document.getElementById('leaderboard');
+    leaderboard.innerHTML = '';
+
+    const users = Object.keys(userData);
+    const stats = users.map(user => ({
+        user,
+        ...calculateMonthlyStats(user)
+    }));
+
+    stats.sort((a, b) => b.ratio - a.ratio);
+
+    stats.forEach((stat, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><a href="#" onclick="showUserStats('${stat.user}')">${stat.user}</a></td>
+            <td>${stat.totalSlouching}</td>
+            <td>${stat.totalCorrect}</td>
+            <td>${stat.totalTime}</td>
+            <td>${stat.ratio}</td>
+        `;
+        leaderboard.appendChild(row);
+    });
+}
 
 function showUserStats(user) {
     currentUser = user;
@@ -53,7 +92,7 @@ function updateChart() {
             labels: labels,
             datasets: [{
                 label: 'Correct/Incorrect Posture Ratio',
-                data: data,
+                data: data.map(day => (day.correct / day.slouching).toFixed(2)),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 2,
                 fill: false

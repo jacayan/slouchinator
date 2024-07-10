@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Posture Leaderboard</h1>
+    <h1>Posture Leaderboard for July</h1>
     <table>
         <thead>
             <tr>
@@ -21,38 +21,7 @@
             </tr>
         </thead>
         <tbody id="leaderboard">
-            <tr data-user="userA">
-                <td>1</td>
-                <td><a href="#" onclick="showUserStats('userA')">User A</a></td>
-                <td>50</td>
-                <td>150</td>
-                <td>200</td>
-                <td>3.0</td>
-            </tr>
-            <tr data-user="userB">
-                <td>2</td>
-                <td><a href="#" onclick="showUserStats('userB')">User B</a></td>
-                <td>80</td>
-                <td>160</td>
-                <td>240</td>
-                <td>2.0</td>
-            </tr>
-            <tr data-user="userC">
-                <td>3</td>
-                <td><a href="#" onclick="showUserStats('userC')">User C</a></td>
-                <td>30</td>
-                <td>60</td>
-                <td>90</td>
-                <td>2.0</td>
-            </tr>
-            <tr data-user="userD">
-                <td>4</td>
-                <td><a href="#" onclick="showUserStats('userD')">User D</a></td>
-                <td>70</td>
-                <td>70</td>
-                <td>140</td>
-                <td>1.0</td>
-            </tr>
+            <!-- Data will be dynamically inserted here -->
         </tbody>
     </table>
 
@@ -61,7 +30,7 @@
         <canvas id="userChart"></canvas>
         <select id="timeframe" onchange="updateChart()">
             <option value="week">Past Week</option>
-            <option value="month">Past Month</option>
+            <option value="month" selected>Past Month</option>
             <option value="year">Past Year</option>
         </select>
         <button onclick="hideUserStats()">Back to Leaderboard</button>
