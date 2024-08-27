@@ -38,9 +38,13 @@ tbody tr:nth-child(odd) {
 }
 
 #userChart {
-    max-width: 600px;
-    margin: 0 auto;
+    width: 800px;
+    height: 400px;
+    max-width: 100%; /* Ensures responsiveness */
+    max-height: 100%; /* Ensures responsiveness */
 }
+
+
 
 #timeframe {
     margin: 20px;

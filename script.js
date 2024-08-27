@@ -1,35 +1,57 @@
 const userData = {
-    userA: {
-        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+    "User A": {
+        week: [
+            {
+                date: new Date('2024-08-26'),
+                slouching: 50,
+                correct: 100
+            },
+            {
+                date: new Date('2024-08-27'),
+                slouching: 60, // in minutes
+                correct: 80    // in minutes
+            }
+        ],
+        month: [
+            {
+                date: new Date('2024-08-26'),
+                slouching: 50,
+                correct: 100
+            },
+        ],
+        year: [
+            {
+                date: new Date('2024-08-26'),
+                slouching: 50,
+                correct: 100
+            },
+        ]
     },
-    userB: {
-        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+    "User B": {
+        week: [],
+        month: [],
+        year: []
     },
-    userC: {
-        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
+    "User C": {
+        week: [],
+        month: [],
+        year: []
     },
-    userD: {
-        month: Array.from({ length: 30 }, (_, i) => ({ date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        week: Array.from({ length: 7 }, (_, i) => ({ date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 60), correct: Math.floor(Math.random() * 120) })),
-        year: Array.from({ length: 12 }, (_, i) => ({ date: new Date(Date.now() - (11 - i) * 30 * 24 * 60 * 60 * 1000), slouching: Math.floor(Math.random() * 1800), correct: Math.floor(Math.random() * 3600) }))
-    }
+    // Add more users as needed
 };
 
-let currentUser = 'userA';
+let currentUser = 'User A';
 let currentChart;
 
 document.addEventListener("DOMContentLoaded", function() {
     populateLeaderboard();
 });
 
-function calculateMonthlyStats(user) {
-    const data = userData[user].month;
+function calculateWeeklyStats(user) {
+    const data = userData[user].week;
+    if (data.length === 0) {
+        return { totalSlouching: 0, totalCorrect: 0, totalTime: 0, ratio: 0 };
+    }
     const totalSlouching = data.reduce((acc, day) => acc + day.slouching, 0);
     const totalCorrect = data.reduce((acc, day) => acc + day.correct, 0);
     const totalTime = totalSlouching + totalCorrect;
@@ -44,7 +66,7 @@ function populateLeaderboard() {
     const users = Object.keys(userData);
     const stats = users.map(user => ({
         user,
-        ...calculateMonthlyStats(user)
+        ...calculateWeeklyStats(user)
     }));
 
     stats.sort((a, b) => b.ratio - a.ratio);
